@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	<context:property-placeholder location="classpath:db.properties" />
+
+	<bean class="com.alibaba.druid.pool.DruidDataSource" id="dds">
+		<property name="url" value="${oracl.url}"></property>
+		<property name="username" value="${oracl.user}"></property>
+		<property name="password" value="${oracl.pass}"></property>
+		<property name="driverClassName" value="${oracl.driverClassName}"></property>
+	</bean>
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sfb">
+		<property name="mapperLocations" value="classpath:com/momo/dao/*.xml"></property>
+		<property name="dataSource" ref="dds"></property>
+		<property name="configLocation" value="classpath:mybatis.xml"></property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.momo.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sfb"></property>
+	</bean>
+	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="dtm">
+		<property name="dataSource" ref="dds"></property>
+	</bean>
+	<!-- <aop:config>
+		<aop:pointcut expression="execution(* com.momo.)" id=""/>
+		<aop:advisor advice-ref=""/>
+	</aop:config> -->
+</beans>
