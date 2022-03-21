@@ -83,7 +83,7 @@
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>dubbo</artifactId>
-				<version>2.5.3</version>
+				<version>2.6.9</version>
 				<!-- 在dubbo中去除一些低版本spring依赖 -->
 				<exclusions>
 					<exclusion>
